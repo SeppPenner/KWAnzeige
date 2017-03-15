@@ -45,7 +45,7 @@ Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\KWAnzeige.exe"; Dest
 Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\Calendar.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\languages\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\tim\Desktop\KWAnzeige\KWAnzeige\bin\Debug\languages\*"; DestDir: "{app}\languages\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
