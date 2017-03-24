@@ -3,13 +3,13 @@ using System.Windows.Forms;
 
 namespace KWAnzeige
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
+        ///     Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

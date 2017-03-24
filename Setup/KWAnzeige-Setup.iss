@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KWAnzeige"
-#define MyAppVersion "1.0.0.1"
+#define MyAppVersion "1.0.0.2"
 #define MyAppPublisher "Hämmer Electronics."
 #define MyAppURL "www.softwareload24.de.tl"
 #define MyAppExeName "KWAnzeige.exe"
