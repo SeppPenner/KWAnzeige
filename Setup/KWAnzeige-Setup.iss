@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KWAnzeige"
-#define MyAppVersion "1.0.0.3"
+#define MyAppVersion "1.0.1.0"
 #define MyAppPublisher "Hämmer Electronics."
 #define MyAppURL "www.softwareload24.de.tl"
 #define MyAppExeName "KWAnzeige.exe"
-#define MyPath "C:\Users\tim\Desktop\Updaten_Snyk\KWAnzeige"
+#define MyPath "C:\Users\Tim\Documents\Git\C# und VB\KWAnzeige"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -23,13 +23,13 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile={#MyPath}\KWAnzeige\bin\Debug\License.txt
+LicenseFile={#MyPath}\KWAnzeige\bin\Release\License.txt
 OutputDir={#MyPath}\Setup
 OutputBaseFilename=KWAnzeige-Setup
-SetupIconFile={#MyPath}\KWAnzeige\bin\Debug\Calendar.ico
+SetupIconFile={#MyPath}\KWAnzeige\bin\Release\Calendar.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -42,11 +42,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "{#MyPath}\KWAnzeige\bin\Debug\KWAnzeige.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\KWAnzeige\bin\Debug\Calendar.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\KWAnzeige\bin\Debug\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\KWAnzeige\bin\Debug\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyPath}\KWAnzeige\bin\Debug\languages\*"; DestDir: "{app}\languages\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#MyPath}\KWAnzeige\bin\Release\KWAnzeige.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\KWAnzeige\bin\Release\Calendar.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\KWAnzeige\bin\Release\Languages.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\KWAnzeige\bin\Release\License.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyPath}\KWAnzeige\bin\Release\languages\*"; DestDir: "{app}\languages\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
