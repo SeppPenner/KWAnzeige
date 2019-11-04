@@ -8,7 +8,7 @@ The executable was written and tested in .Net 4.8.
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/KWAnzeige.svg)](https://github.com/SeppPenner/KWAnzeige/issues)
 [![GitHub forks](https://img.shields.io/github/forks/SeppPenner/KWAnzeige.svg)](https://github.com/SeppPenner/KWAnzeige/network)
 [![GitHub stars](https://img.shields.io/github/stars/SeppPenner/KWAnzeige.svg)](https://github.com/SeppPenner/KWAnzeige/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/SeppPenner/KWAnzeige/master/License.txt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/SeppPenner/KWAnzeige/master/License.txt)
 [![Known Vulnerabilities](https://snyk.io/test/github/SeppPenner/KWAnzeige/badge.svg)](https://snyk.io/test/github/SeppPenner/KWAnzeige)
 
 ## Screenshot from the executable german:
