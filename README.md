@@ -2,7 +2,6 @@ KWAnzeige
 ====================================
 
 KWAnzeige is an executable to check the current calendar week.
-The executable was written and tested in .Net 5.0.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/aknjh9vc3esvb7ga?svg=true)](https://ci.appveyor.com/project/SeppPenner/kwanzeige)
 [![GitHub issues](https://img.shields.io/github/issues/SeppPenner/KWAnzeige.svg)](https://github.com/SeppPenner/KWAnzeige/issues)
