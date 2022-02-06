@@ -31,7 +31,7 @@ namespace KWAnzeige
         /// <summary>
         /// The timer.
         /// </summary>
-        private readonly Timer timer = new Timer();
+        private readonly Timer timer = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Main"/> class.
