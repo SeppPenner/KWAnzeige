@@ -59,7 +59,7 @@ public partial class Main : Form
     private void MainLoad(object sender, EventArgs e)
     {
         this.textBoxCW.Text = GetIso8601WeekOfYear(DateTime.Now).ToString();
-        this.timer.Elapsed += this.TimerTick;
+        this.timer.Elapsed += this.TimerTick!;
         this.timer.Interval = 1000;
         this.timer.Start();
     }
@@ -90,7 +90,7 @@ public partial class Main : Form
     private void InitializeLanguageManager()
     {
         this.languageManager.SetCurrentLanguage("de-DE");
-        this.languageManager.OnLanguageChanged += this.OnLanguageChanged;
+        this.languageManager.OnLanguageChanged += this.OnLanguageChanged!;
     }
 
     /// <summary>
