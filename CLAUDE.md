@@ -90,10 +90,14 @@ Follow the surrounding code, it is consistent throughout every hand written file
 
 Do not silently "clean up" these, they are existing behaviour:
 
-- **The `Timer` alias.** `GlobalUsings.cs` contains `global using Timer = System.Timers.Timer;`,
-  which is needed because `System.Windows.Forms.Timer` would otherwise win through
-  `ImplicitUsings`. The consequence is that `Elapsed` fires on a ThreadPool thread and not on the
-  UI thread, so anything the handler touches on a control needs marshalling.
+- **The `Timer` alias and its `SynchronizingObject`.** `GlobalUsings.cs` contains
+  `global using Timer = System.Timers.Timer;`, which is needed because
+  `System.Windows.Forms.Timer` would otherwise win through `ImplicitUsings`. That timer raises
+  `Elapsed` on a ThreadPool thread, and `TimerTick` writes to a control, so `MainLoad` sets
+  `SynchronizingObject = this`. Removing that line reintroduces an illegal cross thread call that
+  stays invisible without an attached debugger, because `CheckForIllegalCrossThreadCalls` defaults
+  to `Debugger.IsAttached`. Switching to `System.Windows.Forms.Timer` instead would also be correct,
+  but then `Elapsed` has to become `Tick` and the alias has to go.
 - **The timer runs every second for a value that changes weekly.** `MainLoad` sets
   `Interval = 1000`. That is not about the calendar week itself, it is the only mechanism that
   notices the rollover at midnight while the window stays open.

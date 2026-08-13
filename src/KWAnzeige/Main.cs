@@ -61,6 +61,10 @@ public partial class Main : Form
         this.textBoxCW.Text = GetIso8601WeekOfYear(DateTime.Now).ToString();
         this.timer.Elapsed += this.TimerTick!;
         this.timer.Interval = 1000;
+
+        // The timer raises its event on a ThreadPool thread while the handler writes to a control,
+        // so the event has to be marshalled to the thread that owns the window handle.
+        this.timer.SynchronizingObject = this;
         this.timer.Start();
     }
 
