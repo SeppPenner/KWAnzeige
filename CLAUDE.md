@@ -7,17 +7,20 @@ read only text box. It has a language combo box (German and English), a minimize
 else. The whole application is one form. It is shipped as an Inno Setup installer, it is **not** a
 NuGet package: no `GeneratePackageOnBuild`, no push script.
 
-One solution `src/KWAnzeige.sln` with exactly one project:
+One solution `src/KWAnzeige.sln` with exactly two projects:
 
 - `src/KWAnzeige/KWAnzeige.csproj`, `OutputType` `WinExe`, `UseWindowsForms`, the application.
+- `src/KWAnzeige.Tests/KWAnzeige.Tests.csproj`, MSTest, added in version 1.0.8.0.
 
 Layout inside `src/KWAnzeige`:
 
 - `Program.cs`: the `Main` method, `[STAThread]`, `Application.Run(new Main())`.
-- `Main.cs`: the form logic. `GetIso8601WeekOfYear` does the calendar week calculation, `MainLoad`
-  starts the timer, `TimerTick` refreshes the text box, `InitializeLanguageManager` and
-  `LoadLanguagesToCombo` set up the languages, `ComboBoxLanguageSelectedIndexChanged` and
-  `OnLanguageChanged` handle a language switch, `ButtonMinimize_Click` minimizes the window.
+- `Main.cs`: the form logic. `MainLoad` starts the timer, `TimerTick` refreshes the text box,
+  `InitializeLanguageManager` and `LoadLanguagesToCombo` set up the languages,
+  `ComboBoxLanguageSelectedIndexChanged` and `OnLanguageChanged` handle a language switch,
+  `ButtonMinimize_Click` minimizes the window.
+- `CalendarWeekCalculator.cs`: the calendar week calculation, the only piece of the application that
+  is not tied to the form. It lives outside `Main.cs` so that it can be tested.
 - `Main.Designer.cs` plus `Main.resx`: designer generated code and the embedded form icon. Do not
   hand edit the layout, the designer owns it.
 - `GlobalUsings.cs`: all usings of the project, including the alias `Timer`.
@@ -25,6 +28,13 @@ Layout inside `src/KWAnzeige`:
   `Title`), copied to the output directory with `CopyToOutputDirectory=Always`.
 - `License.txt` and `Calendar.ico`: shipped next to the executable, the icon is also the
   `ApplicationIcon`.
+
+Layout inside `src/KWAnzeige.Tests`:
+
+- `CalendarWeekCalculatorTests.cs`: the documented ISO 8601 edge cases as `DataRow`s, every day of
+  one week, the comparison against `ISOWeek.GetWeekOfYear` of the framework for every day from 1900
+  to 2100, the allowed range, the time of day and the current culture.
+- `GlobalUsings.cs`: all usings of the test project.
 
 Everything else in the repository:
 
@@ -45,10 +55,15 @@ There is no `Updating.md`, no `HowToUse.md`, no `.github` folder and no pipeline
 dotnet build src/KWAnzeige.sln -c Release
 ```
 
-- Single target framework `net9.0-windows`, no multi-targeting. `RuntimeIdentifiers` is `win-x64`,
-  because the publish for the installer is a win-x64 publish.
-- All build properties live directly in `src/KWAnzeige/KWAnzeige.csproj`. There is **no**
-  `Directory.Build.props` in this repository.
+```powershell
+dotnet test src/KWAnzeige.sln -c Release
+```
+
+- Single target framework `net9.0-windows` in both projects, no multi-targeting.
+  `RuntimeIdentifiers` is `win-x64` in the application, because the publish for the installer is a
+  win-x64 publish.
+- All build properties live directly in the two `.csproj` files and are duplicated there. There is
+  **no** `Directory.Build.props` in this repository.
 - `TreatWarningsAsErrors` is enabled, so every warning breaks the build, NuGet warnings (`NU****`)
   from restore included. A clean build reports zero warnings, keep it that way.
 - `NU1803` (HTTP source usage during restore) is the one warning suppressed via `NoWarn`. Fix
@@ -59,9 +74,22 @@ dotnet build src/KWAnzeige.sln -c Release
 - Restore needs nuget.org. Several private feeds are configured globally on this machine. If one of
   them answers 404 for public packages, restore fails with `NU1301`. Then build with an explicit
   source: `dotnet build src/KWAnzeige.sln --source https://api.nuget.org/v3/index.json`.
-- There is no test project. A behaviour change is verified by publishing and starting the
-  executable, and by checking the calendar week it shows against a known value. Never claim a run
+- Tests are MSTest, in the single test project `src/KWAnzeige.Tests`, which follows the same package
+  set as the sibling repositories: `Microsoft.NET.Test.Sdk`, `MSTest.TestAdapter`,
+  `MSTest.TestFramework`, `coverlet.collector` and `GitVersion.MsBuild`. `dotnet test` runs 25 tests,
+  they need no network, write nothing and leave the working tree untouched. The test project sets
+  `UseWindowsForms` as well, because it references the application project. Never claim a test run
   happened without running it.
+- Only `CalendarWeekCalculator` is covered, the form itself is not. Beyond the tests, a behaviour
+  change is verified by publishing and starting the executable and reading the window through UI
+  automation, which is the only way to see the text box content from a script:
+
+  ```powershell
+  Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes
+  ```
+
+  A correct run shows the window title `Aktuelle Kalenderwoche`, the label
+  `Aktuelle Kalenderwoche:`, the button `Minimieren` and the current calendar week in the text box.
 
 ## Code conventions
 

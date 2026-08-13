@@ -35,30 +35,13 @@ public partial class Main : Form
     }
 
     /// <summary>
-    /// Gets the ISO8601 week of the year.
-    /// </summary>
-    /// <param name="time">The time to check.</param>
-    /// <returns>The calendar week.</returns>
-    private static int GetIso8601WeekOfYear(DateTime time)
-    {
-        var day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
-
-        if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-        {
-            time = time.AddDays(3);
-        }
-
-        return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-    }
-
-    /// <summary>
     /// Handles the form load event.
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The event args.</param>
     private void MainLoad(object sender, EventArgs e)
     {
-        this.textBoxCW.Text = GetIso8601WeekOfYear(DateTime.Now).ToString();
+        this.textBoxCW.Text = CalendarWeekCalculator.GetIso8601WeekOfYear(DateTime.Now).ToString();
         this.timer.Elapsed += this.TimerTick!;
         this.timer.Interval = 1000;
 
@@ -85,7 +68,7 @@ public partial class Main : Form
     /// <param name="e">The event args.</param>
     private void TimerTick(object sender, EventArgs e)
     {
-        this.textBoxCW.Text = GetIso8601WeekOfYear(DateTime.Now).ToString();
+        this.textBoxCW.Text = CalendarWeekCalculator.GetIso8601WeekOfYear(DateTime.Now).ToString();
     }
 
     /// <summary>

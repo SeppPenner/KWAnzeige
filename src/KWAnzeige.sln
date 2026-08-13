@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KWAnzeige", "KWAnzeige\KWAnzeige.csproj", "{C25EB83A-E16F-4338-8BD0-913790D75AF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KWAnzeige.Tests", "KWAnzeige.Tests\KWAnzeige.Tests.csproj", "{FB8DF2AB-82E4-4983-9B5E-DDFC2D328627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C25EB83A-E16F-4338-8BD0-913790D75AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C25EB83A-E16F-4338-8BD0-913790D75AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C25EB83A-E16F-4338-8BD0-913790D75AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8DF2AB-82E4-4983-9B5E-DDFC2D328627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8DF2AB-82E4-4983-9B5E-DDFC2D328627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8DF2AB-82E4-4983-9B5E-DDFC2D328627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8DF2AB-82E4-4983-9B5E-DDFC2D328627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
