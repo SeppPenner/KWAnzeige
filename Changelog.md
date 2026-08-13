@@ -1,5 +1,6 @@
 # Change history
 
+* **Version 1.0.8.0 (2026-08-13)** : Updated NuGet packages, moved to Net 10.0, published the setup content self contained, added a test project, fixed the cross thread access to the calendar week text box, fixed the encoding of the setup script.
 * **Version 1.0.7.0 (2025-01-07)** : Updated Nuget packages, added audit mode, moved to Net9.0.
 * **Version 1.0.6.0 (2024-01-03)** : Updated nuget packages, moved to Net 8.0.
 * **Version 1.0.5.0 (2022-11-23)** : Updated nuget packages, moved to Net 7.0.
