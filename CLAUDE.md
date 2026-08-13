@@ -59,7 +59,7 @@ dotnet build src/KWAnzeige.sln -c Release
 dotnet test src/KWAnzeige.sln -c Release
 ```
 
-- Single target framework `net9.0-windows` in both projects, no multi-targeting.
+- Single target framework `net10.0-windows` in both projects, no multi-targeting.
   `RuntimeIdentifiers` is `win-x64` in the application, because the publish for the installer is a
   win-x64 publish.
 - All build properties live directly in the two `.csproj` files and are duplicated there. There is
@@ -167,6 +167,9 @@ Do not silently "clean up" these, they are existing behaviour:
   (`Anzeige`, `H_00E4mmer`, `Todays`). Leave it alone.
 - **`.gitattributes` is the unmodified Visual Studio template**, every rule below `* text=auto` is
   commented out. Any binary file that must not be normalized needs its own rule added.
+- **`HaemmerElectronics.SeppPenner.Language` 1.1.9 does not exist on nuget.org.** The changelog of
+  the sibling repository `CSharpLanguageManager` lists it, but only up to 1.1.8 was ever pushed.
+  `dotnet list package --outdated` is right when it names 1.1.8 as the newest version.
 
 ## Releasing
 
