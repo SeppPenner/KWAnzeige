@@ -39,9 +39,12 @@ Layout inside `src/KWAnzeige.Tests`:
 Everything else in the repository:
 
 - `Setup/KWAnzeige-Setup.iss`: the Inno Setup script.
-- `Setup/build-setup-files.bat`: deletes every `bin` and `obj` below `src`, publishes the project to
-  `src/KWAnzeige/bin/publish` and removes the `*.pdb` files. It does **not** compile the installer,
-  that is a separate `ISCC.exe` run.
+- `Setup/build-setup-files.bat`: deletes every `bin` and `obj` below `src`, publishes the
+  application self contained for win-x64 to `src/KWAnzeige/bin/publish` and removes the `*.pdb`
+  files. It does **not** compile the installer, that is a separate `ISCC.exe` run. A correct publish
+  is 274 files and about 118 MB, which makes the installer about 35 MB. If it comes out at 9 files
+  and 1 MB, the `--self-contained` switch got lost and the target machine would need an installed
+  .NET runtime.
 - `Setup/KWAnzeige-Setup.exe`: the built installer, tracked in git.
 - `README.md` (the only user documentation), `Changelog.md`, `License.txt` (MIT),
   `Screenshot_DE.PNG`, `Screenshot_EN.PNG`, `.gitattributes` and `.gitignore`.
