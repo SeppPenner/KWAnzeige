@@ -45,7 +45,8 @@ Everything else in the repository:
   is 274 files and about 118 MB, which makes the installer about 35 MB. If it comes out at 9 files
   and 1 MB, the `--self-contained` switch got lost and the target machine would need an installed
   .NET runtime.
-- `Setup/KWAnzeige-Setup.exe`: the built installer, tracked in git.
+- `Setup/KWAnzeige-Setup.exe`: the built installer, not tracked, it hangs on the GitHub release of
+  its version tag.
 - `README.md` (the only user documentation), `Changelog.md`, `License.txt` (MIT),
   `Screenshot_DE.PNG`, `Screenshot_EN.PNG`, `.gitattributes` and `.gitignore`.
 - `src/.editorconfig` and `src/KWAnzeige.sln.DotSettings`.
@@ -155,15 +156,15 @@ Do not silently "clean up" these, they are existing behaviour:
 - **`License.txt` exists twice**, in the repository root and as `src/KWAnzeige/License.txt`, with
   identical bytes. The `.iss` uses the project copy as `LicenseFile` and it is copied next to the
   executable, the root copy is the one GitHub and the README link.
-- **The installer is tracked although `*.exe` is ignored.** `.gitignore` line 6 is `*.exe`, so
-  `Setup/KWAnzeige-Setup.exe` only gets into a commit with `git add -f`. That is intentional, the
-  installer is part of the repository.
+- **The installer is not part of the repository.** `.gitignore` line 6 is `*.exe`, and up to and
+  including 1.0.8 `Setup/KWAnzeige-Setup.exe` got into the commits with `git add -f` anyway. It hangs
+  on the GitHub release of its version tag now, do not add it back.
 - **`MyAppPublisher` has a trailing dot.** The `.iss` says `H\xe4mmer Electronics.`, everywhere
   else in the repository the company is written without it. It ends up in the installer metadata
   that way.
-- **The quick launch icon task is dead code.** `OnlyBelowVersion: 0,6.1` limits it to Windows 7 and
-  older, so it never triggers. It is also the reason Inno Setup warns about `{userappdata}` in a
-  per machine install.
+- **The quick launch icon task is gone.** `OnlyBelowVersion: 0,6.1` limited it to Windows 7 and older,
+  so it never triggered, and its `{userappdata}` path was what made Inno Setup warn about a per user
+  area in a per machine install. The compile is warning free now, keep it that way.
 - **AppVeyor badge without CI in the repository.** `README.md` links an AppVeyor build that is
   configured outside of this repository.
 - **`src/KWAnzeige.sln.DotSettings`** is tracked and holds nothing but a ReSharper user dictionary
@@ -186,8 +187,10 @@ Do not silently "clean up" these, they are existing behaviour:
 6. **Only now** build the installer, the tag has to exist first. Otherwise GitVersion burns a
    prerelease version such as `1.0.8-2+Branch.master.Sha...` into the shipped executable. Run
    `Setup/build-setup-files.bat`, then `ISCC.exe` on `Setup/KWAnzeige-Setup.iss`.
-7. Commit the rebuilt `Setup/KWAnzeige-Setup.exe` with `git add -f`.
-8. Push the commits and the tag.
+7. Push the commits and the tag.
+8. Attach `Setup/KWAnzeige-Setup.exe` to the GitHub release of that tag. **Never commit the
+   installer.** `Setup/` is the `OutputDir` of the Inno Setup script, so the file lands there during
+   the build and `.gitignore` covers it afterwards.
 
 The version in the `Changelog.md` has four parts (`1.0.8.0`), the tag has three (`1.0.8`).
 
@@ -195,6 +198,22 @@ Running `build-setup-files.bat` from a tool shell needs care: this environment s
 `NoDefaultCurrentDirectoryInExePath`, so cmd does not find the batch file by name alone, and the
 `cd ..\src` inside it is relative to the start directory. Use `cd /d` into `Setup` and
 `call .\build-setup-files.bat`. A double click or a normal console is unaffected.
+
+For step 8 there is no `gh` on this machine. The GitHub API does the job, with the token that
+`git push` already uses, so nothing has to be stored anywhere:
+
+```bash
+c=$(printf "protocol=https\nhost=github.com\n\n" | git credential fill)
+tok=$(printf "%s" "$c" | grep '^password=' | cut -d= -f2-)
+id=$(curl -s -X POST -H "Authorization: Bearer $tok" \
+  https://api.github.com/repos/SeppPenner/KWAnzeige/releases \
+  -d '{"tag_name":"1.0.9","name":"1.0.9"}' | grep -m1 '"id"' | tr -dc 0-9)
+curl -s -X POST -H "Authorization: Bearer $tok" -H "Content-Type: application/octet-stream" \
+  --data-binary @Setup/KWAnzeige-Setup.exe \
+  "https://uploads.github.com/repos/SeppPenner/KWAnzeige/releases/$id/assets?name=KWAnzeige-Setup.exe"
+```
+
+Never print that token, and never write it into a file.
 
 ## Git
 
